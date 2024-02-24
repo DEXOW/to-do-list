@@ -1,13 +1,18 @@
 import React, { Fragment, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Button, Label, TextInput } from "flowbite-react";
-import { Link } from "react-router-dom";
 
 const Component = () => {
+    const navigate = useNavigate();
+
     useEffect(() => {
         document.title = "Login";
     }, []);
 
-
+    const handleLogin = () => {
+        // TODO: Handle login
+        navigate("/dashboard");
+    };
 
     return (
         <Fragment>
@@ -24,7 +29,7 @@ const Component = () => {
                             <TextInput id="password" label="Password" type="password" placeholder="Password" />
                         </div>
                         <div className="w-full flex items-end justify-between gap-5 mt-5">
-                            <Button color="light">Login</Button>
+                            <Button onClick={handleLogin} color="light">Login</Button>
                             <Link to="/register" className="text-white hover:underline text-right">Create an account ?</Link>
                         </div>
                     </div>
