@@ -1,7 +1,9 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import { Button, Label, TextInput } from "flowbite-react";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import UserContext from "../../context/userContext";
+import withAuth from "../../hooks/authHook";
 
 const Component = () => {
     const [user, setUser] = useState({
@@ -11,12 +13,30 @@ const Component = () => {
         confPassword: "",
     });
 
+    const userProvider = useContext(UserContext);
+    const navigate = useNavigate();
+
     useEffect(() => {
         document.title = "Register";
     }, []);
 
-    const handleRegister = () => {
-        console.log('Registering user...');
+    const handleRegister = (e) => {
+        e.preventDefault();
+        axios.post(`${process.env.REACT_APP_API_URL}/user/register`, user, { withCredentials: true })
+        .then((res) => {
+            if (res.status === 200) {
+                axios.get(`${process.env.REACT_APP_API_URL}/user`, { withCredentials: true })
+                .then((res) => {
+                    if (res.status === 200) {
+                        userProvider.setUser(res.data);
+                        navigate("/dashboard");
+                    }
+                });
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        });
     }
 
     return (
@@ -54,4 +74,4 @@ const Component = () => {
     );
 };
 
-export default Component;
+export default withAuth(Component);
