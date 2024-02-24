@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect } from "react";
 import { IoFilter, IoChevronDownOutline } from "react-icons/io5";
-import { TbPlus } from "react-icons/tb";
 import Sidebar from "../layout/Sidebar/sidebar";
 import TaskItem from "../layout/Task/taskItem";
 
@@ -32,26 +31,11 @@ const Component = () => {
                         </div>
                     </div>
                     <div className="mt-10">
-                        <div className="flex flex-col gap-2">
+                        <p className="text-xl font-extrabold">Tasks</p>
+                        <div className="flex flex-col gap-2 mt-4">
                             <TaskItem task={{title: "Design Standup"}} />
                             <TaskItem task={{title: "Login UI bug fix"}} />
                         </div>
-                    </div>
-                    <div className="fixed bottom-5 right-0 left-0 flex justify-center">
-                        <button className="w-1/2 flex justify-between items-center bg-black text-white rounded-full py-2 px-6">
-                            <div className="flex items-center gap-2">
-                                <TbPlus color="white"/>
-                                <p>Create New Task</p>
-                            </div>
-                            <div className="flex items-center gap-2 text-[10px] text-black font-black">
-                                <p className="bg-white rounded-sm py-0.5 px-1 hover:bg-gray-200 ease-in-out duration-200 cursor-pointer">
-                                    CTRL
-                                </p>
-                                <p className="bg-white rounded-sm py-0.5 px-1 hover:bg-gray-200 ease-in-out duration-200 cursor-pointer">
-                                    N
-                                </p>
-                            </div>
-                        </button>
                     </div>
                 </div>
             </div>

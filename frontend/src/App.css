@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Trip Sans';
-  src: url('./fonts/trip-sans-variable.ttf') format('truetype');
+  src: url('./fonts/trip-sans.otf') format('opentype');
 }
 
 body {
