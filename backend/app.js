@@ -13,7 +13,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 const corsOptions = {
-    origin: ['http://localhost:3000', 'http://localhost:3001'], 
+    origin: ['http://localhost:3000', 'http://localhost:3001', 'https://to-do-list-dexow.vercel.app'], 
     credentials: true,
     optionSuccessStatus: 200
 }
