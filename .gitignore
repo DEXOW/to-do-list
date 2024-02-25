@@ -14,6 +14,7 @@ frontend/.pnp.js
 /frontend/build
 
 # misc
+.env
 /frontned/.DS_Store
 /frontned/.env.local
 /frontned/.env.development.local
