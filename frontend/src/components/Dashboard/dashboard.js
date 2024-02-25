@@ -96,11 +96,9 @@ const Component = () => {
     }
 
     const handleAddNewTask = async () => {
-        console.log(newTaskName, newTaskListId);
         if (newTaskName && newTaskListId) {
             try {
                 const response = await axios.post(`${process.env.REACT_APP_API_URL}/task/create`, { name: newTaskName, listId: newTaskListId }, { withCredentials: true });
-                console.log(response.data);
             } catch (error) {
                 console.log(error);
             }
@@ -112,7 +110,6 @@ const Component = () => {
     const handleClearCompletedTasks = async () => {
         try {
             const response = await axios.post(`${process.env.REACT_APP_API_URL}/task/clearCompleted`, { listId: String(pageProvider.pageData.list).toString() },{ withCredentials: true });
-            console.log(response.data);
         } catch (error) {
             console.log(error);
         }

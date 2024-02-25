@@ -59,7 +59,6 @@ const Component = () => {
         if (newListName) {
             try {
                 const response = await axios.post(`${process.env.REACT_APP_API_URL}/list/create`, { name: newListName }, { withCredentials: true });
-                console.log(response.data);
             } catch (error) {
                 console.log(error);
             }
