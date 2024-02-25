@@ -16,12 +16,18 @@ const Component = () => {
     const pageProvider = useContext(PageDataContext);
     const [lists, setLists] = useState([]);
     const [newListName, setNewListName] = useState("");
-    const list = pageProvider.pageData.list;
+    const [currentList, setCurrentList] = useState(0);
 
     useEffect(() => {
         document.title = "Home";
+        pageProvider.setPageData({list: 0});
         getLists();
     }, []);
+
+    useEffect(() => {
+        setCurrentList(pageProvider.pageData.list);
+    }, [pageProvider.pageData]);
+
 
     const getLists = async () => {
         try {
@@ -83,10 +89,10 @@ const Component = () => {
                     <div className="h-5/6 mt-5">
                         <div className="h-full flex flex-col gap-2">
                             <div className="flex flex-col gap-2 overflow-y-auto overflow-x-hidden">
-                                <SidebarItem title="Overview" count={2} active={list == 0} icon={<LuGalleryHorizontalEnd strokeWidth={2.5}/>} onClick={() => {pageProvider.setPageData({list:0})}}/>
+                                <SidebarItem title="Overview" count={2} active={currentList === 0} icon={<LuGalleryHorizontalEnd strokeWidth={2.5}/>} onClick={() => {pageProvider.setPageData({list:0})}}/>
                                 {/* <SidebarItem title="Tasks" count={5} icon={<LuGalleryHorizontalEnd strokeWidth={2.5}/>} /> */}
                                 {lists.map((list, index) => {
-                                    return <SidebarItem key={index} title={list.name} count={0} active={list._id == pageProvider.pageData.list} icon={<LuGalleryHorizontalEnd strokeWidth={2.5}/>} onClick={() => {pageProvider.setPageData({list: list._id})}}/>
+                                    return <SidebarItem key={index} title={list.name} count={0} active={list._id === pageProvider.pageData.list} icon={<LuGalleryHorizontalEnd strokeWidth={2.5}/>} onClick={() => {pageProvider.setPageData({list: list._id})}}/>
                                 })}
                             </div>
                             <button id="addNewListBtn" onClick={toggleAddNewListInput} className="flex items-center gap-3 text-black rounded-lg p-3 bg-background-gray hover:bg-gray-200 ease-in-out duration-300">

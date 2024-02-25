@@ -26,10 +26,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Import Routes
 import userRouter from "./api/routes/user.js";
 import listRouter from "./api/routes/list.js";
+import taskRouter from "./api/routes/task.js";
 
 // Use Routes
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/list", middleware.isAuthenticatedUser, listRouter);
+app.use("/api/v1/task", middleware.isAuthenticatedUser, taskRouter);
 
 // app.use(express.static(path.join(__dirname, "./frontend/build")));
 
