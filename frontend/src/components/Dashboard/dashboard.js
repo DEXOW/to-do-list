@@ -33,14 +33,16 @@ const Component = () => {
     }, []);
 
     useEffect(() => {
-        if (filter === 0) {
+        if (pageProvider.pageData) {
+            if (pageProvider.pageData.list === 0) {
+                setFilteredTasks(tasks);
+            } else {
+                setFilteredTasks(tasks.filter(task => task.list === pageProvider.pageData.list));
+            }
+        } else {
             setFilteredTasks(tasks);
-        } else if (filter === 1) {
-            setFilteredTasks(tasks.filter(task => !task.completed));
-        } else if (filter === 2) {
-            setFilteredTasks(tasks.filter(task => task.completed));
         }
-    }, [filter, tasks]);
+    }, [filter, tasks, pageProvider.pageData]);
 
     const getCurrentDateInStr = () => {
         const today = new Date();
@@ -119,27 +121,42 @@ const Component = () => {
                             <h1 className="text-2xl font-extrabold tracking-wide">Good Morning, {user.name}</h1>
                             <p className="text-gray-500">Today, {getCurrentDateInStr()}</p>
                         </div>
-                        <Dropdown placement="bottom" dismissOnClick={true} renderTrigger={() => 
-                            <div className="flex items-start gap-5">
-                                <button className="w-48 flex items-center gap-2 bg-white text-black rounded-lg p-2 hover:bg-gray-200 ease-in-out duration-200">
-                                    <div className="bg-gray-200 p-1 rounded-md">
-                                        <IoChevronDownOutline size={12}/>
-                                    </div>
-                                    <p>{filters[filter]}</p>
-                                </button>
-                            </div>
-                        }>
-                            <Dropdown.Item onClick={() => {setFilter(0)}}>All</Dropdown.Item>
-                            <Dropdown.Item onClick={() => {setFilter(1)}}>To Do</Dropdown.Item>
-                            <Dropdown.Item onClick={() => {setFilter(2)}}>Completed</Dropdown.Item>
-                        </Dropdown>
-                    </div>
-                    <div className="mt-10">
-                        <div className="flex flex-col gap-2">
-                            {filteredTasks.map((task, index) => {
-                                return <TaskItem key={index} task={task} getTaskFunc={getTasks} />
-                            })}
+                        <div className="flex items-start gap-5">
+                            <Dropdown placement="bottom" dismissOnClick={true} renderTrigger={() => 
+                                    <button className="w-48 flex items-center gap-2 bg-white text-black rounded-lg p-2 hover:bg-gray-200 ease-in-out duration-200">
+                                        <div className="bg-gray-200 p-1 rounded-md">
+                                            <IoChevronDownOutline size={12}/>
+                                        </div>
+                                        <p>{filters[filter]}</p>
+                                    </button>
+                            }>
+                                <Dropdown.Item onClick={() => {setFilter(0)}}>All</Dropdown.Item>
+                                <Dropdown.Item onClick={() => {setFilter(1)}}>To Do</Dropdown.Item>
+                                <Dropdown.Item onClick={() => {setFilter(2)}}>Completed</Dropdown.Item>
+                            </Dropdown>
                         </div>
+                    </div>
+                    <div className="mt-10 mb-20">
+                        { filter === 0 || filter === 1 ? (
+                            <>
+                            <p className="text-xl font-extrabold mb-4">To Do</p>
+                            <div className="flex flex-col gap-2">
+                                {filteredTasks.map((task, index) => {
+                                    if (!task.completed) return <TaskItem key={index} task={task} getTaskFunc={getTasks} />
+                                })}
+                            </div>
+                            </>
+                        ) : null }
+                        { filter === 0 || filter === 2 ? (
+                            <>
+                            <p className="text-xl font-extrabold my-4">Completed</p>
+                            <div className="flex flex-col gap-2">
+                                {filteredTasks.map((task, index) => {
+                                    if (task.completed) return <TaskItem key={index} task={task} getTaskFunc={getTasks} />
+                                })}
+                            </div>
+                            </>
+                        ) : null }
                     </div>
                     <div className="fixed bottom-5 right-0 left-0 flex justify-center">
                         <div className="w-1/2 bg-black text-white rounded-full py-2 px-4">

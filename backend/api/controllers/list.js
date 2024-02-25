@@ -1,10 +1,16 @@
 import List from '../models/list.js';
+import Task from '../models/task.js';
 
 const getAll = async (req, res) => {
     const { id : userId } = req.user;
     try {
         const lists = await List.find({ user: userId });
-        res.status(200).json({ lists });
+        // get the number of tasks in each list
+        const listsWithTasks = await Promise.all(lists.map(async list => {
+            const tasks = await Task.find({ list: list.id });
+            return { ...list._doc, tasks: tasks.length };
+        }));
+        res.status(200).json({ lists: listsWithTasks });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

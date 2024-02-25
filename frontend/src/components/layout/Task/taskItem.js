@@ -9,7 +9,7 @@ const Component = ({ task, getTaskFunc }) => {
     useEffect(() => {
        $(`#checkBox-${task._id}`).prop('defaultChecked', task.completed);
        console.log(task.completed);
-    }, []);
+    }, [task._id]);
 
     const handleTaskCheck = (e) => {
         let completed = e.target.checked ? "true" : "false";

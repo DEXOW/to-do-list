@@ -1,6 +1,5 @@
 const Component = ({
     title,
-    count,
     icon,
     active,
     onClick
@@ -12,9 +11,6 @@ const Component = ({
             </div>
             <div className="w-full flex justify-between">
                 <p className="itemTitle font-bold">{title}</p>
-                <div className="flex items-center bg-gray-300 px-1.5 rounded-md">
-                    <p className="itemCount text-xs font-bold">{count}</p>
-                </div>
             </div>
         </button>
     )
