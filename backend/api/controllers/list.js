@@ -70,7 +70,8 @@ const remove = async (req, res) => {
     }
 
     try {
-        await List.findByIdAndRemove(id);
+        await List.deleteOne({ _id: id });
+        await Task.deleteMany({ list: id });
         res.status(200).json({ message: "List Removed Successfully" });
     } catch (error) {
         res.status(500).json({ message: error.message });

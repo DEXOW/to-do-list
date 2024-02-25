@@ -91,9 +91,9 @@ const Component = () => {
                     <div className="h-5/6 mt-5">
                         <div className="h-full flex flex-col gap-2">
                             <div className="flex flex-col gap-2 overflow-y-auto overflow-x-hidden">
-                                <SidebarItem title="Overview" active={currentList === 0} icon={<LuGalleryHorizontalEnd strokeWidth={2.5}/>} onClick={() => {pageProvider.setPageData({list:0})}}/>
+                                <SidebarItem id="0" title="Overview" active={currentList === 0} icon={<LuGalleryHorizontalEnd strokeWidth={2.5}/>} onClick={() => {pageProvider.setPageData({list:0})}}/>
                                 {lists.map((list, index) => {
-                                    return <SidebarItem key={index} title={list.name} active={list._id === pageProvider.pageData.list} icon={<LuGalleryHorizontalEnd strokeWidth={2.5}/>} onClick={() => {pageProvider.setPageData({list: list._id})}}/>
+                                    return <SidebarItem key={index} id={list._id} title={list.name} active={list._id === pageProvider.pageData.list} icon={<LuGalleryHorizontalEnd strokeWidth={2.5}/>} onClick={() => {pageProvider.setPageData({list: list._id})}} onDelete={() => {getLists(); pageProvider.setPageData({list:0})}}/>
                                 })}
                             </div>
                             <button id="addNewListBtn" onClick={toggleAddNewListInput} className="flex items-center gap-3 text-black rounded-lg p-3 bg-background-gray hover:bg-gray-200 ease-in-out duration-300">

@@ -51,6 +51,16 @@ const Component = ({ task, getTaskFunc }) => {
         }
     }
 
+    const handleDeleteTask = async () => {
+        try {
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/task/delete`, { id: task._id }, { withCredentials: true });
+            getTaskFunc();
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <div className="w-full bg-white rounded-lg px-4 py-3 hover:shadow-md ease-in-out duration-500">
             <div id={`taskNameDisplay-${task._id}`} className='flex justify-between'>
@@ -65,7 +75,7 @@ const Component = ({ task, getTaskFunc }) => {
                         </button>
                     }>
                         <Dropdown.Item onClick={toggleEditTaskInput}>Edit</Dropdown.Item>
-                        <Dropdown.Item onClick={() => console.log("Delete")}>Delete</Dropdown.Item>
+                        <Dropdown.Item onClick={handleDeleteTask}>Delete</Dropdown.Item>
                     </Dropdown>
                 </div>
             </div>
