@@ -108,6 +108,16 @@ const Component = () => {
         toggleNewTaskInput();
         getTasks();
     }
+
+    const handleClearCompletedTasks = async () => {
+        try {
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/task/clearCompleted`, { listId: String(pageProvider.pageData.list).toString() },{ withCredentials: true });
+            console.log(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+        getTasks();
+    }
     
     return (
         <Fragment>
@@ -139,22 +149,27 @@ const Component = () => {
                     <div className="mt-10 mb-20">
                         { filter === 0 || filter === 1 ? (
                             <>
-                            <p className="text-xl font-extrabold mb-4">To Do</p>
-                            <div className="flex flex-col gap-2">
-                                {filteredTasks.map((task, index) => {
-                                    if (!task.completed) return <TaskItem key={index} task={task} getTaskFunc={getTasks} />
-                                })}
-                            </div>
+                                <p className="text-xl font-extrabold mb-4">To Do</p>
+                                <div className="flex flex-col gap-2">
+                                    {filteredTasks.map((task, index) => {
+                                        if (!task.completed) return <TaskItem key={index} task={task} getTaskFunc={getTasks} />
+                                    })}
+                                </div>
                             </>
                         ) : null }
                         { filter === 0 || filter === 2 ? (
                             <>
-                            <p className="text-xl font-extrabold my-4">Completed</p>
-                            <div className="flex flex-col gap-2">
-                                {filteredTasks.map((task, index) => {
-                                    if (task.completed) return <TaskItem key={index} task={task} getTaskFunc={getTasks} />
-                                })}
-                            </div>
+                                <div className="flex justify-between gap-2 items-center my-4">
+                                    <p className="text-xl font-extrabold">Completed</p>
+                                    <button onClick={handleClearCompletedTasks} className="bg-gray-200 text-sm rounded-md py-0.5 px-1 mx-5 hover:bg-gray-300 ease-in-out duration-200 cursor-pointer">
+                                        Clear All
+                                    </button>
+                                </div>
+                                <div className="flex flex-col gap-2">
+                                    {filteredTasks.map((task, index) => {
+                                        if (task.completed) return <TaskItem key={index} task={task} getTaskFunc={getTasks} />
+                                    })}
+                                </div>
                             </>
                         ) : null }
                     </div>

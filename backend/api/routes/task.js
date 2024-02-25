@@ -10,5 +10,6 @@ router.get('/get', controller.get);
 router.post('/create', controller.create);
 router.post('/update', controller.update);
 router.post('/delete', controller.remove);
+router.post('/clearCompleted', controller.clearCompleted);
 
 export default router;

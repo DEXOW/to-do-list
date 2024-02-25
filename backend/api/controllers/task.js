@@ -97,12 +97,37 @@ const remove = async (req, res) => {
     }
 }
 
+const clearCompleted = async (req, res) => {
+    const { listId } = req.body;
+
+    if (!listId) {
+        return res.status(400).json({ message: "Please Enter List Id" });
+    }
+
+    if (listId == "0") {
+        try {
+            const tasks = await Task.deleteMany({ completed: true });
+            res.status(200).json({ tasks });
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    } else {
+        try {
+            const tasks = await Task.deleteMany({ list: listId, completed: true });
+            res.status(200).json({ tasks });
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    }
+}
+
 export default { 
     getAll, 
     get, 
     create, 
     update, 
     remove,
-    getAllByUser
+    getAllByUser,
+    clearCompleted
 };
 
