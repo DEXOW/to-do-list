@@ -16,6 +16,7 @@ export default function withAuth(Component) {
                         const userResponse = await axios.get(`${process.env.REACT_APP_API_URL}/user`, { withCredentials: true });
                         setUser(userResponse.data);
                     } catch (error) {
+                        setUser(null);
                         navigate("/login");
                     } finally {
                         setLoading(false);

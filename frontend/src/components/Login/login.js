@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button, Label, TextInput } from "flowbite-react";
 import axios from "axios";
 import UserContext from "../../context/userContext";
-import withAuth from "../../hooks/authHook";
 
 const Component = () => {
     const [user, setUser] = useState({
@@ -18,6 +17,12 @@ const Component = () => {
         document.title = "Login";
     }, []);
 
+    useEffect(() => {
+        if (userProvider.user !== null) {
+            navigate("/dashboard");
+        }
+    }, [userProvider, navigate]);
+
     const handleLogin = (e) => {
         e.preventDefault();
         axios.post(`${process.env.REACT_APP_API_URL}/user/login`, user, { withCredentials: true })
@@ -27,7 +32,7 @@ const Component = () => {
                 .then((res) => {
                     if (res.status === 200) {
                         userProvider.setUser(res.data);
-                        navigate("/dashboard");
+                        // navigate("/dashboard");
                     }
                 });
             }
@@ -62,4 +67,4 @@ const Component = () => {
     );
 };
 
-export default withAuth(Component);
+export default Component;

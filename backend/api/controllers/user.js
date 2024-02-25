@@ -71,8 +71,13 @@ const register = async (req, res) => {
     }
 }
 
+const logout = async (req, res) => {
+    res.clearCookie('token').send({ code: "SUCCESS", message: 'Logged out successfully' });
+}
+
 export default { 
     getUser,
     login,
-    register
+    register,
+    logout
 };

@@ -1,13 +1,36 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useContext } from "react";
 import { IoFilter, IoChevronDownOutline } from "react-icons/io5";
 import { TbPlus } from "react-icons/tb";
 import Sidebar from "../layout/Sidebar/sidebar";
 import TaskItem from "../layout/Task/taskItem";
+import withAuth from "../../hooks/authHook";
+import UserContext from "../../context/userContext";
+import PageDataContext from "../../context/pageContext";
 
 const Component = () => {
+    const userProvider = useContext(UserContext);
+    const pageProvider = useContext(PageDataContext);
+    const user = userProvider.user;
+
     useEffect(() => {
         document.title = "Home";
+        pageProvider.setPageData({"list": 0})
     }, []);
+
+    const getCurrentDateInStr = () => {
+        const today = new Date();
+
+        const day = today.getDate();
+        const month = today.getMonth();
+        const year = today.getFullYear();
+
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const monthName = monthNames[month];
+
+        const formattedDate = `${day} ${monthName} ${year}`;
+
+        return formattedDate;
+    }
     
     return (
         <Fragment>
@@ -18,8 +41,8 @@ const Component = () => {
                 <div className="h-full w-full flex flex-col overflow-y-auto px-10 pt-10">
                     <div className="flex justify-between gap-5">
                         <div>
-                            <h1 className="text-2xl font-extrabold tracking-wide">Good Morning, Thinal</h1>
-                            <p className="text-gray-500">Today, 23 Feb 2024</p>
+                            <h1 className="text-2xl font-extrabold tracking-wide">Good Morning, {user.name}</h1>
+                            <p className="text-gray-500">Today, {getCurrentDateInStr()}</p>
                         </div>
                         <div className="flex items-start gap-5">
                             <button className="w-48 flex items-center gap-2 bg-white text-black rounded-lg p-2 hover:bg-gray-200 ease-in-out duration-200">
@@ -59,4 +82,4 @@ const Component = () => {
     );
 };
 
-export default Component;
+export default withAuth(Component);

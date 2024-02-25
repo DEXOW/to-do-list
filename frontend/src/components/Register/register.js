@@ -3,7 +3,6 @@ import { Button, Label, TextInput } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import UserContext from "../../context/userContext";
-import withAuth from "../../hooks/authHook";
 
 const Component = () => {
     const [user, setUser] = useState({
@@ -74,4 +73,4 @@ const Component = () => {
     );
 };
 
-export default withAuth(Component);
+export default Component;
