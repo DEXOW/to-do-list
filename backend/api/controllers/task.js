@@ -106,7 +106,8 @@ const clearCompleted = async (req, res) => {
 
     if (listId == "0") {
         try {
-            const tasks = await Task.deleteMany({ completed: true });
+            const list = await List.find({ user: req.user.id });
+            const tasks = await Task.deleteMany({ list: { $in: list.map(list => list.id) }, completed: true });
             res.status(200).json({ tasks });
         } catch (error) {
             res.status(500).json({ message: error.message });
