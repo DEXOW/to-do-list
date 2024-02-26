@@ -33,10 +33,10 @@ app.use("/api/v1/user", userRouter);
 app.use("/api/v1/list", middleware.isAuthenticatedUser, listRouter);
 app.use("/api/v1/task", middleware.isAuthenticatedUser, taskRouter);
 
-// app.use(express.static(path.join(__dirname, "./frontend/build")));
+app.use(express.static(path.join(__dirname, "./frontend/build")));
 
-// app.get("*", (req, res) => {
-//   res.sendFile(path.resolve(__dirname, "./frontend/build/index.html"));
-// });
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "./frontend/build/index.html"));
+});
 
 export default app;
