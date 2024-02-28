@@ -59,6 +59,11 @@ const Component = () => {
         return formattedDate;
     }
 
+    const getCurrentTime = () => {
+        const today = new Date();
+        return today.getTime();
+    }
+
     const getLists = async () => {
         try {
             const response = await axios.get(`${process.env.REACT_APP_API_URL}/list/all`, { withCredentials: true });
@@ -118,19 +123,19 @@ const Component = () => {
     
     return (
         <Fragment>
-            <div className="h-screen pt-5 flex gap-5 overflow-hidden">
+            <div className="h-screen pt-5 flex overflow-hidden">
                 <div className="relative">
                     <Sidebar />
                 </div>
-                <div className="h-full w-full flex flex-col overflow-y-auto px-10 pt-10">
+                <div className="h-full w-full flex flex-col overflow-y-auto md:px-10 px-4 pt-10">
                     <div className="flex justify-between gap-5">
                         <div>
-                            <h1 className="text-2xl font-extrabold tracking-wide">Good Morning, {user.name}</h1>
+                            <h1 className="text-2xl font-extrabold tracking-wide">{getCurrentTime < 12 ? "Good Morning" : "Good Afternoon"}, {user.name}</h1>
                             <p className="text-gray-500">Today, {getCurrentDateInStr()}</p>
                         </div>
                         <div className="flex items-start gap-5">
                             <Dropdown placement="bottom" dismissOnClick={true} renderTrigger={() => 
-                                    <button className="w-48 flex items-center gap-2 bg-white text-black rounded-lg p-2 hover:bg-gray-200 ease-in-out duration-200">
+                                    <button className="md:w-48 max-md:pe-4 flex items-center gap-2 bg-white text-black rounded-lg p-2 hover:bg-gray-200 ease-in-out duration-200">
                                         <div className="bg-gray-200 p-1 rounded-md">
                                             <IoChevronDownOutline size={12}/>
                                         </div>
@@ -171,11 +176,11 @@ const Component = () => {
                         ) : null }
                     </div>
                     <div className="fixed bottom-5 right-0 left-0 flex justify-center">
-                        <div className="w-1/2 bg-black text-white rounded-full py-2 px-4">
+                        <div className="md:w-1/2 max-md:mx-14 bg-black text-white rounded-full py-2 px-4">
                             <button id="addNewTaskBtn" onClick={toggleNewTaskInput} className="flex justify-between items-center w-full">
                                 <div className="flex items-center gap-2">
                                     <TbPlus color="white"/>
-                                    <p>Create New Task</p>
+                                    <p className="text-left">Create New Task</p>
                                 </div>
                                 <div className="flex items-center gap-2 text-[10px] text-black font-black">
                                     <p className="bg-white rounded-sm py-0.5 px-1 hover:bg-gray-200 ease-in-out duration-200 cursor-pointer">
